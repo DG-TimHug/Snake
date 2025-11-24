@@ -1,6 +1,6 @@
 ﻿namespace Snake;
 
-class Program
+class GameLogic
 {
     static void Main(string[] args)
     {
