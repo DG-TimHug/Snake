@@ -1,9 +1,6 @@
 ﻿namespace Snake;
 
-class GameLogic
+public class GameLogic
 {
-    static void Main()
-    {
-        
-    }
+    
 }

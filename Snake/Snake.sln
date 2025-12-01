@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "Snake\Snake.csproj", "{C0946B3E-6E91-4100-8C75-D2BA248A7C16}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnakeConsole", "SnakeConsole\SnakeConsole.csproj", "{0A500474-9254-4B27-8510-741E0615F86F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "Snake\Snake.csproj", "{2C62405E-7BC4-4413-B846-940B78A356CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,13 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C0946B3E-6E91-4100-8C75-D2BA248A7C16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0946B3E-6E91-4100-8C75-D2BA248A7C16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0946B3E-6E91-4100-8C75-D2BA248A7C16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0946B3E-6E91-4100-8C75-D2BA248A7C16}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A500474-9254-4B27-8510-741E0615F86F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A500474-9254-4B27-8510-741E0615F86F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A500474-9254-4B27-8510-741E0615F86F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A500474-9254-4B27-8510-741E0615F86F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C62405E-7BC4-4413-B846-940B78A356CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C62405E-7BC4-4413-B846-940B78A356CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C62405E-7BC4-4413-B846-940B78A356CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C62405E-7BC4-4413-B846-940B78A356CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

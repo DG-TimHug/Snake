@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SnakeConsole")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b22a69cd07828d8fb15472527008797c2b08adf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6cfab1a7b8ca10afd045342b239ca80a28a8d1dd")]
 [assembly: System.Reflection.AssemblyProductAttribute("SnakeConsole")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SnakeConsole")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
