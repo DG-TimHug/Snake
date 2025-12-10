@@ -47,27 +47,35 @@ class Program
                     }
                 }
             }
-            
-            game.Update();
-            Draw(game);
-            Thread.Sleep(100);
 
+            try
+            {
+                game.Update();
+                Draw(game);
+                Thread.Sleep(120);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 
     public static void Draw(GameLogic game)
     {
         Console.Clear();
+        
 
         Console.SetCursorPosition(game.Apple.horizontal, game.Apple.vertical);
         Console.ForegroundColor = ConsoleColor.Green;
         Console.Write("🍎");
 
         Console.SetCursorPosition(game.Snakehead.horizontal, game.Snakehead.vertical);
-        Console.ForegroundColor = ConsoleColor.Red;
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.Write("■");
 
-        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.ForegroundColor = ConsoleColor.Green;
         foreach (var b in game.Snakebody)
         {
             Console.SetCursorPosition(b.horizontal, b.vertical);
