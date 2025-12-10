@@ -2,50 +2,58 @@
 
 public class GameLogic
 {
-    public Direction Direction { get; set; } = new Direction(1, 0);
-    public (int horizontal, int vertical) Snakehead { get; set; } = (10, 5);
-    public (int horizontal, int vertical) Apple { get; set; }
-    
-    public bool AteApple { get; set; }
-    public List<(int horizontal, int vertical)> Snakebody { get; set; } = new();
-    public readonly Random Random = new();
+    public Direction Direction { get; private set; } = Direction.Right;
+    public (int horizontal, int vertical) Snakehead { get; private set; } = (10, 5);
+    public List<(int horizontal, int vertical)> Snakebody { get; private set; } = new();
 
-    public void SetDirection(Direction direction)
+    public (int horizontal, int vertical) Apple { get; private set; }
+
+    private readonly Random random = new();
+    private bool ateApple;
+
+    public void SetDirection(Direction dir)
     {
-        Direction = direction;
+        if (dir.Horizontal == -Direction.Horizontal && dir.Horizontal != 0) return;
+        if (dir.Vertical == -Direction.Vertical && dir.Vertical != 0) return;
+
+        Direction = dir;
     }
-    
+
     public void Update()
     {
-        Snakebody.Insert(0, Snakehead);
+        var oldHead = Snakehead;
+
         Snakehead = (
             Snakehead.horizontal + Direction.Horizontal,
             Snakehead.vertical + Direction.Vertical
         );
 
+        Snakebody.Insert(0, oldHead);
+
         if (Snakehead == Apple)
         {
-            AteApple = true;
+            ateApple = true;
             PlaceApple();
         }
 
-        if (!AteApple && Snakebody.Count > 0)
+        if (!ateApple)
+        {
             Snakebody.RemoveAt(Snakebody.Count - 1);
+        }
 
-        AteApple = false;
+        ateApple = false;
 
         Snakehead = (
-            Math.Clamp(Snakehead.horizontal, 0, Console.BufferWidth  - 1),
-            Math.Clamp(Snakehead.vertical,   0, Console.BufferHeight - 1)
+            Math.Clamp(Snakehead.horizontal, 0, Console.BufferWidth - 1),
+            Math.Clamp(Snakehead.vertical, 0, Console.BufferHeight - 1)
         );
     }
-    
+
     public void PlaceApple()
     {
         Apple = (
-            Random.Next(0, Console.BufferWidth - 1),
-            Random.Next(0, Console.BufferHeight - 1)
+            random.Next(0, Console.BufferWidth - 1),
+            random.Next(0, Console.BufferHeight - 1)
         );
-
     }
 }
