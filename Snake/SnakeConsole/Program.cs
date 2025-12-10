@@ -6,71 +6,51 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("Welcome to Snake!");
-        Console.WriteLine("Before starting lets set the playing field size");
-        var boardWidth = GetWindowWidth();
-        var boardHeight = GetWindowHeight();
-        var board = new GameLogic(boardHeight, boardWidth);
+        Run();
+    }
+    public static void Run()
+    {
         Console.Clear();
-        Console.CursorVisible = false;
-        do
+        var top = 3;
+        var left = 20;
+        var consoleWidth = Console.WindowWidth;
+        
+        UpdateConsole(left, top);
+        try
         {
-            for (var row = 0; row < board.PlayingField.GetLength(0); row++)
+            ConsoleKeyInfo keyInfo;
+            do
             {
-                for (var column = 0; column < board.PlayingField.GetLength(1); column++)
+                keyInfo = Console.ReadKey(true);
+                //Console.Clear();
+                switch (keyInfo.Key)
                 {
-                    if (board.PlayingField[row, column])
-                    {
-                        PrintHead();
-                    }
-                    else
-                    {
-                        PrintApple();
-                    }
+                    case ConsoleKey.W:
+                        top = Math.Max(0, top - 1);
+                        break;
+                    case ConsoleKey.A:
+                        left = Math.Max(0, left - 1);
+                        break;
+                    case ConsoleKey.S:
+                        top = Math.Min(Console.WindowHeight - 1, top + 1);
+                        break;
+                    case ConsoleKey.D:
+                        left = Math.Max(0, left + 1);
+                        break;
                 }
-
-                Console.WriteLine();
-            }
-            board.AdvanceGeneration();
-            Console.SetCursorPosition(0,0);
-        } while (board.IsGameAlive());
-    }
-    private static int GetWindowHeight()
-    {
-        while (true)
+                UpdateConsole(left, top);
+            } while (keyInfo.Key != ConsoleKey.X);
+        }
+        catch (Exception)
         {
-            Console.WriteLine("How tall should the playing field be?");
-            if (int.TryParse(Console.ReadLine(), out var playingFieldHeight) && playingFieldHeight > 0)
-            {
-                return playingFieldHeight;
-            }
-            Console.WriteLine("Please enter a number between 0 and 100..");
+            Console.Write("error");
         }
     }
 
-    private static int GetWindowWidth()
+    private static void UpdateConsole(int left, int top)
     {
-        while (true)
-        {
-            Console.WriteLine("How wide should the playing field be?");
-            if (int.TryParse(Console.ReadLine(), out var playingFieldWidth) && playingFieldWidth > 0)
-            {
-                return playingFieldWidth;
-            }
-            Console.WriteLine("Please enter a number between 0 and 100..");
-        }
-    }
-    private static void PrintHead()
-    {
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.Write(" ■ ");
-        Console.ResetColor();
-    }
-    
-    private static void PrintApple()
-    {
+        Console.SetCursorPosition(left,top);
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.Write(" 🍎 ");
-        Console.ResetColor();
+        Console.Write("■");
     }
 }
