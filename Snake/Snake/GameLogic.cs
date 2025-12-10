@@ -13,4 +13,29 @@ public class GameLogic
     {
         Direction = direction;
     }
+    
+    public void Update()
+    {
+        Snakebody.Insert(0, Snakehead); 
+        Snakehead = (Snakehead.horizontal + Direction.Horizontal,
+            Snakehead.vertical + Direction.Vertical);
+        
+        if (Snakebody.Count > 0 && !AteApple)
+            Snakebody.RemoveAt(Snakebody.Count - 1);
+
+
+        AteApple = false;
+
+        if (Snakehead == Apple)
+        {
+            AteApple = true;
+            PlaceApple();
+        }
+    }
+    
+    public void PlaceApple()
+    {
+        Apple = (Random.Next(1, 40), Random.Next(1, 20));
+    }
+
 }

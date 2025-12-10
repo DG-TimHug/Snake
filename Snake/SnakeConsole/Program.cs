@@ -10,70 +10,68 @@ class Program
     }
     public static void Run()
     {
+
+        var game = new GameLogic();
+        game.PlaceApple();
         Console.Clear();
-        var top = 3;
-        var left = 20;
-        
-        var dx = 0; 
-        var dy = 0;
-        
-        UpdateConsole(left, top);
-        try
+
+        while (true)
         {
-            while (true)
+            if (Console.KeyAvailable)
             {
-                if (Console.KeyAvailable)
+                var key = Console.ReadKey(true).Key;
+                switch (key)
                 {
-                    var keyInfo = Console.ReadKey(true);
-                    
-                    if (keyInfo.Key == ConsoleKey.X) break;
-                    
-                    //Console.Clear();
-                    
-                    switch (keyInfo.Key)
+                    case ConsoleKey.W:
                     {
-                        case ConsoleKey.W:
-                            dx = 0; dy = -1;
-                            break;
-                        case ConsoleKey.A:
-                            dx = -1; dy = 0;
-                            break;
-                        case ConsoleKey.S:
-                            dx = 0; dy = 1;
-                            break;
-                        case ConsoleKey.D:
-                            dx = 1; dy = 0;
-                            break;
+                        game.SetDirection(Direction.Up);
+                        break;
                     }
-                    UpdateConsole(left, top);
+
+                    case ConsoleKey.A:
+                    {
+                        game.SetDirection(Direction.Left);
+                        break;
+                    }
+
+                    case ConsoleKey.S:
+                    {
+                        game.SetDirection(Direction.Down);
+                        break;
+                    }
+
+                    case ConsoleKey.D:
+                    {
+                        game.SetDirection(Direction.Right);
+                        break;
+                    }
                 }
-                
-                if (dx != 0 || dy != 0)
-                {
-                    Console.SetCursorPosition(left, top);
-                    Console.Write(" ");
-
-                    var newLeft = left + dx;
-                    var newTop = top + dy;
-
-                    if (newLeft >= 0 && newLeft < Console.WindowWidth) left = newLeft;
-                    if (newTop >= 0 && newTop < Console.WindowHeight) top = newTop;
-
-                    UpdateConsole(left, top);
-                }
-                Thread.Sleep(100);
             }
-        }
-        catch (Exception)
-        {
-            Console.Write("error");
+            
+            game.Update();
+            Draw(game);
+            Thread.Sleep(100);
+
         }
     }
 
-    private static void UpdateConsole(int left, int top)
+    public static void Draw(GameLogic game)
     {
-        Console.SetCursorPosition(left,top);
+        Console.Clear();
+
+        Console.SetCursorPosition(game.Apple.horizontal, game.Apple.vertical);
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.Write("🍎");
+
+        Console.SetCursorPosition(game.Snakehead.horizontal, game.Snakehead.vertical);
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write("■");
+
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        foreach (var b in game.Snakebody)
+        {
+            Console.SetCursorPosition(b.horizontal, b.vertical);
+            Console.Write("■");
+        }
     }
 }
