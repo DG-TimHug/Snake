@@ -6,18 +6,18 @@ internal class Program
     static void Main()
     {
         Console.CursorVisible = false;
-
+    
         Console.SetBufferSize(Console.BufferWidth, Console.WindowHeight);
-
+    
         Run();
     }
-
+    
     private static void Run()
     {
         var game = new GameLogic();
         game.PlaceApple();
         Console.Clear();
-
+    
         while (game.Alive())
         {
             if (Console.KeyAvailable)
