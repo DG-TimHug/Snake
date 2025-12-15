@@ -11,6 +11,8 @@ public class GameLogic
     private readonly Random random = new();
     private bool ateApple;
 
+    public bool alive = true;
+
     public void SetDirection(Direction dir)
     {
         if (dir.Horizontal == -Direction.Horizontal && dir.Horizontal != 0) return;
@@ -47,6 +49,11 @@ public class GameLogic
             Math.Clamp(SnakeHead.horizontal, 0, Console.BufferWidth - 1),
             Math.Clamp(SnakeHead.vertical, 0, Console.BufferHeight - 1)
         );
+
+        if (SnakeBody.Contains(SnakeHead))
+        {
+            alive = false;
+        }
     }
 
     public void PlaceApple()
@@ -59,6 +66,19 @@ public class GameLogic
 
     public bool Alive()
     {
-        return false;
+        if (!alive)
+        {
+            Thread.Sleep(100);
+            Console.Write("Game Over!");
+        }
+        return alive;
+    }
+
+    public void EndGame()
+    {
+        if (Alive() == false)
+        {
+            Environment.Exit(1);
+        }
     }
 }
