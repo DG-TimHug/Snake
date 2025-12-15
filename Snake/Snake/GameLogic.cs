@@ -2,9 +2,9 @@
 
 public class GameLogic
 {
-    public Direction Direction { get; private set; } = Direction.Right;
-    public (int horizontal, int vertical) Snakehead { get; private set; } = (10, 5);
-    public List<(int horizontal, int vertical)> Snakebody { get; private set; } = new();
+    private Direction Direction { get; set; } = Direction.Right;
+    public (int horizontal, int vertical) SnakeHead { get; private set; } = (10, 5);
+    public List<(int horizontal, int vertical)> SnakeBody { get; private set; } = new();
 
     public (int horizontal, int vertical) Apple { get; private set; }
 
@@ -21,16 +21,16 @@ public class GameLogic
 
     public void Update()
     {
-        var oldHead = Snakehead;
+        var oldHead = SnakeHead;
 
-        Snakehead = (
-            Snakehead.horizontal + Direction.Horizontal,
-            Snakehead.vertical + Direction.Vertical
+        SnakeHead = (
+            SnakeHead.horizontal + Direction.Horizontal,
+            SnakeHead.vertical + Direction.Vertical
         );
 
-        Snakebody.Insert(0, oldHead);
+        SnakeBody.Insert(0, oldHead);
 
-        if (Snakehead == Apple)
+        if (SnakeHead == Apple)
         {
             ateApple = true;
             PlaceApple();
@@ -38,14 +38,14 @@ public class GameLogic
 
         if (!ateApple)
         {
-            Snakebody.RemoveAt(Snakebody.Count - 1);
+            SnakeBody.RemoveAt(SnakeBody.Count - 1);
         }
 
         ateApple = false;
 
-        Snakehead = (
-            Math.Clamp(Snakehead.horizontal, 0, Console.BufferWidth - 1),
-            Math.Clamp(Snakehead.vertical, 0, Console.BufferHeight - 1)
+        SnakeHead = (
+            Math.Clamp(SnakeHead.horizontal, 0, Console.BufferWidth - 1),
+            Math.Clamp(SnakeHead.vertical, 0, Console.BufferHeight - 1)
         );
     }
 
@@ -55,5 +55,10 @@ public class GameLogic
             random.Next(0, Console.BufferWidth - 1),
             random.Next(0, Console.BufferHeight - 1)
         );
+    }
+
+    public bool Alive()
+    {
+        return false;
     }
 }

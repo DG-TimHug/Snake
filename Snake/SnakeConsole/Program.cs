@@ -1,8 +1,7 @@
 ﻿using Snake;
-
 namespace SnakeConsole;
 
-class Program
+internal class Program
 {
     static void Main()
     {
@@ -13,15 +12,14 @@ class Program
         Run();
     }
 
-    public static void Run()
+    private static void Run()
     {
         var game = new GameLogic();
         game.PlaceApple();
         Console.Clear();
 
-        while (true)
+        while (!game.Alive())
         {
-            // Handle input
             if (Console.KeyAvailable)
             {
                 var key = Console.ReadKey(true).Key;
@@ -48,12 +46,12 @@ class Program
         Console.ForegroundColor = ConsoleColor.Green;
         Console.Write("O");
 
-        Console.SetCursorPosition(game.Snakehead.horizontal, game.Snakehead.vertical);
+        Console.SetCursorPosition(game.SnakeHead.horizontal, game.SnakeHead.vertical);
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.Write("■");
 
         Console.ForegroundColor = ConsoleColor.Green;
-        foreach (var part in game.Snakebody)
+        foreach (var part in game.SnakeBody)
         {
             Console.SetCursorPosition(part.horizontal, part.vertical);
             Console.Write("■");
