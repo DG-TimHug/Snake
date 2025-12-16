@@ -1,6 +1,6 @@
 ﻿namespace Snake;
 
-public class GameLogic
+public class GameLogic(int height, int width)
 {
     private Direction Direction { get; set; } = Direction.Right;
     public (int horizontal, int vertical) SnakeHead { get; private set; } = (10, 5);
@@ -25,6 +25,7 @@ public class GameLogic
 
     public void Update()
     {
+        Board.PlayingFieldGenerator(height, width, SnakeBody, SnakeHead, Apple);
         var oldHead = SnakeHead;
 
         SnakeHead = (
@@ -56,6 +57,9 @@ public class GameLogic
         {
             alive = false;
         }
+
+        Board.PlayingFieldUpdater(SnakeHead.vertical, SnakeHead.horizontal, Apple.vertical, Apple.horizontal,
+            Board.PlayingField, SnakeBody);
     }
 
     public void PlaceApple()
@@ -78,6 +82,9 @@ public class GameLogic
 
     internal void CollisionCheck()
     {
-        if(SnakeHead(SnakeHead.horizontal,SnakeHead.vertical) == Board.PlayingFieldUpdater,(Board.PlayingField, SnakeBody))
+        //TODO: Gebastel work in progress
+        // - differentiate between Gamelogic and Board
+        // - Gamelogic is in charge, Game Logic gives data to Board, Board DOES NOT FETCH data.
+        // - Further splitting up of classes Files and methods. Figure out what to do with border and rendering etc.  
     }
 }
