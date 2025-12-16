@@ -2,7 +2,7 @@ namespace Snake;
 
 public class Board
 {
-    public bool[,] PlayingField { get; private set; }
+    public bool[,] PlayingField { get; private set; } = null!;
 
     public void PlayingFieldGenerator(int height, int width, List<(int horizontal, int vertical)> snake,
         (int horizontal, int vertical) snakeHead, (int horizontal, int vertical) apple)
@@ -14,7 +14,7 @@ public class Board
         PlayingField = PlayingFieldUpdater(snakeHead.vertical, snakeHead.horizontal, apple.vertical, apple.horizontal, playingField, snake);
     }
 
-    public static bool[,] PlayingFieldUpdater(int snakeHeadVertical, int snakeHeadHorizontal, int appleVertical, int appleHorizontal, bool[,] playingField, List<(int horizontal, int vertical)> snake)
+    private static bool[,] PlayingFieldUpdater(int snakeHeadVertical, int snakeHeadHorizontal, int appleVertical, int appleHorizontal, bool[,] playingField, List<(int horizontal, int vertical)> snake)
     {
         foreach (var part in snake)
         {
@@ -27,7 +27,7 @@ public class Board
         return playingField;
     }
 
-    internal bool[,] BorderMaker(int height, int width, bool[,] playingField)
+    private void BorderMaker(int height, int width, bool[,] playingField)
     {
         for (var row = 0; row < height; row++)
         {
@@ -39,7 +39,5 @@ public class Board
                 }
             }
         }
-
-        return playingField;
     }
 }
