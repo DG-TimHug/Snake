@@ -92,7 +92,12 @@ internal class Program
 
             firstRender = false;
         }
-
+        
+        if (game.RemovedTail is var tail && tail != null)
+        {
+            Console.SetCursorPosition(tail.Value.horizontal, tail.Value.vertical);
+            Console.Write(" ");
+        }
         
         Console.SetCursorPosition(game.Apple.horizontal, game.Apple.vertical);
         Console.ForegroundColor = ConsoleColor.Red;
