@@ -73,12 +73,4 @@ public class GameLogic
         }
         return alive;
     }
-
-    public void EndGame()
-    {
-        if (Alive() == false)
-        {
-            Environment.Exit(1);
-        }
-    }
 }

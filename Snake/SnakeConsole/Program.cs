@@ -55,7 +55,7 @@ internal class Program
         }
     }
 
-    public static void Draw(GameLogic game)
+    private static void Draw(GameLogic game)
     {
         Console.Clear();
 
