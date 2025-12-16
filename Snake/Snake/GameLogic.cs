@@ -11,7 +11,9 @@ public class GameLogic
     private readonly Random random = new();
     private bool ateApple;
 
-    public bool alive = true;
+    private bool alive = true;
+
+    public readonly Board Board = new();
 
     public void SetDirection(Direction dir)
     {
@@ -72,5 +74,10 @@ public class GameLogic
             Console.Write("Game Over!");
         }
         return alive;
+    }
+
+    internal void CollisionCheck()
+    {
+        if(SnakeHead(SnakeHead.horizontal,SnakeHead.vertical) == Board.PlayingFieldUpdater,(Board.PlayingField, SnakeBody))
     }
 }
