@@ -3,6 +3,7 @@ namespace SnakeConsole;
 
 internal class Program
 {
+    public static bool firstRender;
     static void Main()
     {
         Console.CursorVisible = false;
@@ -19,9 +20,21 @@ internal class Program
         Console.WriteLine("Before starting lets set the playing field size");
         var boardWidth = GetWindowWidth();
         var boardHeight = GetWindowHeight();
+        
+        Console.SetBufferSize(
+            Math.Max(Console.BufferWidth, boardWidth),
+            Math.Max(Console.BufferHeight, boardHeight)
+        );
+
+        Console.SetWindowSize(
+            Math.Min(Console.LargestWindowWidth, boardWidth),
+            Math.Min(Console.LargestWindowHeight, boardHeight)
+        );
+        
         var game = new GameLogic(boardHeight, boardWidth);
         game.PlaceApple();
         Console.Clear();
+        firstRender = true;
     
         while (game.Alive())
         {
@@ -62,30 +75,39 @@ internal class Program
 
     private static void Draw(GameLogic game)
     {
-        Console.Clear();
+        if (firstRender)
+        {
+            var field = game.Board.PlayingField;
+            var height = field.GetLength(0);
+            var width = field.GetLength(1);
 
+            for (var row = 0; row < height; row++)
+            for (var col = 0; col < width; col++)
+                if (row == 0 || row == height - 1 || col == 0 || col == width - 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.SetCursorPosition(col, row);
+                    Console.Write("#");
+                }
+
+            firstRender = false;
+        }
+
+        
         Console.SetCursorPosition(game.Apple.horizontal, game.Apple.vertical);
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.Write("🍎");
+        Console.Write("*");
 
         Console.SetCursorPosition(game.SnakeHead.horizontal, game.SnakeHead.vertical);
         Console.ForegroundColor = ConsoleColor.DarkGreen;
-        Console.Write("🐍");
+        Console.Write("O");
 
         Console.ForegroundColor = ConsoleColor.Green;
         foreach (var part in game.SnakeBody)
         {
             Console.SetCursorPosition(part.horizontal, part.vertical);
-            Console.Write("■");
+            Console.Write("o");
         }
-        
-        Console.ForegroundColor = ConsoleColor.Blue;
-        foreach (var part in game.Board.PlayingField)
-        {
-            Console.SetCursorPosition(part.horizontal, part.vertical);
-            Console.Write("■");
-        }
-        
     }
     
     private static int GetWindowHeight()

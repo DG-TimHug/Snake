@@ -5,6 +5,7 @@ public class GameLogic(int height, int width)
     private Direction Direction { get; set; } = Direction.Right;
     public (int horizontal, int vertical) SnakeHead { get; private set; } = (10, 5);
     public List<(int horizontal, int vertical)> SnakeBody { get; private set; } = new();
+    
 
     public (int horizontal, int vertical) Apple { get; private set; }
 
