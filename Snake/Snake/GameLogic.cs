@@ -18,7 +18,7 @@ public class GameLogic(int height, int width)
     public readonly Board Board = new();
     
     //TODO:
-    //- Rendering works but Apple often spawns in Wall which causes glitchees,
+    //- Rendering works but Apple often spawns in Wall which causes glitches,
     //- Fix Borders and Death mechanism
     //- :)
 
@@ -74,11 +74,19 @@ public class GameLogic(int height, int width)
 
     public void PlaceApple()
     {
-        Apple = (
-            random.Next(1, width - 1),
-        random.Next(1, height - 1)
-
+        (int horizontal, int vertical) newApple;
+        do
+        {
+            newApple = (
+                random.Next(1, width - 1),
+                random.Next(1, height - 1)
+            );
+        } while (
+            newApple == SnakeHead ||
+            SnakeBody.Contains(newApple)
         );
+
+        Apple = newApple;
     }
 
     public bool Alive()
