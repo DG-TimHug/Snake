@@ -2,21 +2,19 @@ namespace Snake;
 
 public class Board
 {
-    private GameLogic game = new GameLogic();
+    private readonly GameLogic game = new();
     
-    //TODO: Aktives Gebastel WIP in Playingfield
-     
-   private bool[,] GeneratePlayingField(int height, int width, List<(int horizontal, int vertical)> Snake)
+   private bool[,] PlayingFieldGenerator(int height, int width, List<(int horizontal, int vertical)> Snake)
    {
-       int[] = Array.Empty<int>()
        var playingField = new bool[height, width];
-       for (var row = 0; row < height; row++)
+       
+       foreach (var part in Snake)
        {
-           for (var column = 0; column < width; column++)
-           {
-               playingField[row, column] = Snake.Contains()
-           }
+           playingField[part.vertical, part.horizontal] = true;
        }
+       playingField[game.SnakeHead.vertical, game.SnakeHead.horizontal] = true;
+
+       playingField[game.Apple.vertical, game.Apple.horizontal] = true;
        
        return playingField;
    }

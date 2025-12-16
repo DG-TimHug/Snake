@@ -8,7 +8,7 @@ internal class Program
         Console.CursorVisible = false;
     
         Console.SetBufferSize(Console.BufferWidth, Console.WindowHeight);
-    
+
         Run();
     }
     
