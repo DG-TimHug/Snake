@@ -1,9 +1,9 @@
 ﻿using Snake;
 namespace SnakeConsole;
 
-internal class Program
+internal static class Program
 {
-    private static bool FirstRender = true;
+    private static bool firstRender = true;
     static void Main()
     {
         Console.CursorVisible = false;
@@ -69,7 +69,7 @@ internal class Program
 
             game.Update();
             Draw(game);
-            FirstRender = false;
+            firstRender = false;
             Thread.Sleep(120);
         }
     }
@@ -100,7 +100,7 @@ internal class Program
             }
 
 
-            if (FirstRender || loops == 10)
+            if (firstRender || loops == 10)
             {
                 var field = game.Board.PlayingField;
                 var height = field.GetLength(0);
@@ -148,11 +148,11 @@ internal class Program
         while (true)
         {
             Console.WriteLine("How long should your snake be at the start of the game?");
-            if (int.TryParse(Console.ReadLine(), out var initialSnakeLength) && initialSnakeLength > 0)
+            if (int.TryParse(Console.ReadLine(), out var initialSnakeLength) && initialSnakeLength is > 0 and < 7)
             {
                 return initialSnakeLength;
             }
-            Console.WriteLine("Please enter a number between 0 and 50");
+            Console.WriteLine("Please enter a number between 1 and 6");
         }
     }
 }

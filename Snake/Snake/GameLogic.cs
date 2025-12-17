@@ -81,8 +81,9 @@ public class GameLogic(int height, int width)
     {
         if (alive) return alive;
         Console.Clear();
-        Console.Write("Game Over!");
-        Thread.Sleep(1500);
+        Console.WriteLine("Game Over!");
+        Console.WriteLine($"The Length of your snake was {Snake.SnakeBody.Count}");
+        var key = Console.ReadKey(true).Key;
         return alive;
     }
 
