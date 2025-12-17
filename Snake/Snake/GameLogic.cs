@@ -3,22 +3,17 @@
 public class GameLogic(int height, int width)
 {
     private Direction Direction { get; set; } = Direction.Right;
-    public (int horizontal, int vertical) SnakeHead { get; private set; } = (10, 5);
-    public List<(int horizontal, int vertical)> SnakeBody { get; private set; } = new();
-    public (int horizontal, int vertical)? RemovedTail { get; private set; }
-
     
     public (int horizontal, int vertical) Apple { get; private set; }
-
-    private readonly Random random = new();
     private bool ateApple;
-
+    
+    private readonly Random random = new();
     private bool alive = true;
-
     public readonly Board Board = new();
+    public Snake Snake = new();
     
     //TODO:
-    //- Rendering works but Apple often spawns in Wall which causes glitches,
+    //- Rendering works but Apple often spawns in Wall which causes glitches, => happens because Console Windows doesnt auto adjust
     //- Fix Borders and Death mechanism
     //- :)
 
@@ -32,44 +27,46 @@ public class GameLogic(int height, int width)
 
     public void Update()
     {
-        var oldHead = SnakeHead;
+        var oldHead = Snake.SnakeHead;
 
-        SnakeHead = (
-            SnakeHead.horizontal + Direction.Horizontal,
-            SnakeHead.vertical + Direction.Vertical
+        Snake.SnakeHead = (
+            Snake.SnakeHead.horizontal + Direction.Horizontal,
+            Snake.SnakeHead.vertical + Direction.Vertical
         );
-        if (SnakeHead.horizontal <= 0 || SnakeHead.horizontal >= width - 1 || SnakeHead.vertical <= 0 || SnakeHead.vertical >= height - 1)
+        
+        if (Snake.SnakeHead.horizontal <= 0 || Snake.SnakeHead.horizontal >= width - 1 || Snake.SnakeHead.vertical <= 0 || Snake.SnakeHead.vertical >= height - 1)
         {
             alive = false;
             return;
         }
+        CollisionChecker(Snake.SnakeHead);
         
-        SnakeBody.Insert(0, oldHead);
+        Snake.SnakeBody.Insert(0, oldHead);
 
-        if (SnakeHead == Apple)
+        if (Snake.SnakeHead == Apple)
         {
             ateApple = true;
             PlaceApple();
         }
 
-        if (!ateApple && SnakeBody.Count > 0)
+        if (!ateApple && Snake.SnakeBody.Count > 0)
         {
-            RemovedTail = SnakeBody[^1];
-            SnakeBody.RemoveAt(SnakeBody.Count - 1);
+            Snake.RemovedTail = Snake.SnakeBody[^1];
+            Snake.SnakeBody.RemoveAt(Snake.SnakeBody.Count - 1);
         }
         else
         {
-            RemovedTail = null;
+            Snake.RemovedTail = null;
         }
         
         ateApple = false;
         
-        if (SnakeBody.Contains(SnakeHead))
+        if (Snake.SnakeBody.Contains(Snake.SnakeHead))
         {
             alive = false;
         }
 
-        Board.PlayingFieldGenerator(height, width, SnakeBody, SnakeHead, Apple);
+        Board.PlayingFieldGenerator(height, width, Snake.SnakeBody, Snake.SnakeHead, Apple);
     }
 
     public void PlaceApple()
@@ -82,20 +79,24 @@ public class GameLogic(int height, int width)
                 random.Next(1, height - 1)
             );
         } while (
-            newApple == SnakeHead ||
-            SnakeBody.Contains(newApple)
+            newApple == Snake.SnakeHead ||
+            Snake.SnakeBody.Contains(newApple)
         );
 
         Apple = newApple;
     }
 
-    public bool Alive()
+    public bool AliveCheck()
     {
-        if (!alive)
-        {
-            Thread.Sleep(100);
-            Console.Write("Game Over!");
-        }
+        if (alive) return alive;
+        Thread.Sleep(100);
+        Console.Write("Game Over!");
         return alive;
+    }
+
+    internal void CollisionChecker((int horizontal, int vertical)SnakeHead)
+    {
+        
+        
     }
 }

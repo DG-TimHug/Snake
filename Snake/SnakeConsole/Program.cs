@@ -3,7 +3,7 @@ namespace SnakeConsole;
 
 internal class Program
 {
-    public static bool firstRender;
+    private static bool firstRender;
     static void Main()
     {
         Console.CursorVisible = false;
@@ -36,7 +36,7 @@ internal class Program
         Console.Clear();
         firstRender = true;
     
-        while (game.Alive())
+        while (game.AliveCheck())
         {
             if (Console.KeyAvailable)
             {
@@ -93,7 +93,7 @@ internal class Program
             firstRender = false;
         }
         
-        if (game.RemovedTail is var tail && tail != null)
+        if (game.Snake.RemovedTail is var tail && tail != null)
         {
             Console.SetCursorPosition(tail.Value.horizontal, tail.Value.vertical);
             Console.Write(" ");
@@ -103,12 +103,12 @@ internal class Program
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write("*");
 
-        Console.SetCursorPosition(game.SnakeHead.horizontal, game.SnakeHead.vertical);
+        Console.SetCursorPosition(game.Snake.SnakeHead.horizontal, game.Snake.SnakeHead.vertical);
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.Write("O");
 
         Console.ForegroundColor = ConsoleColor.Green;
-        foreach (var part in game.SnakeBody)
+        foreach (var part in game.Snake.SnakeBody)
         {
             Console.SetCursorPosition(part.horizontal, part.vertical);
             Console.Write("o");
