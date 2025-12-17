@@ -27,19 +27,15 @@ public class GameLogic(int height, int width)
 
     public void Update()
     {
-        var oldHead = Snake.SnakeHead;
+        var newhead = CollisionChecker();
 
-        Snake.SnakeHead = (
-            Snake.SnakeHead.horizontal + Direction.Horizontal,
-            Snake.SnakeHead.vertical + Direction.Vertical
-        );
-        
-        if (Snake.SnakeHead.horizontal <= 0 || Snake.SnakeHead.horizontal >= width - 1 || Snake.SnakeHead.vertical <= 0 || Snake.SnakeHead.vertical >= height - 1)
+        if (!alive)
         {
-            alive = false;
             return;
         }
-        CollisionChecker(Snake.SnakeHead);
+        
+        var oldHead = Snake.SnakeHead;
+        Snake.SnakeHead = newhead;
         
         Snake.SnakeBody.Insert(0, oldHead);
 
@@ -61,11 +57,6 @@ public class GameLogic(int height, int width)
         
         ateApple = false;
         
-        if (Snake.SnakeBody.Contains(Snake.SnakeHead))
-        {
-            alive = false;
-        }
-
         Board.PlayingFieldGenerator(height, width, Snake.SnakeBody, Snake.SnakeHead, Apple);
     }
 
@@ -89,14 +80,30 @@ public class GameLogic(int height, int width)
     public bool AliveCheck()
     {
         if (alive) return alive;
-        Thread.Sleep(100);
+        Console.Clear();
         Console.Write("Game Over!");
+        Thread.Sleep(1500);
         return alive;
     }
 
-    internal void CollisionChecker((int horizontal, int vertical)SnakeHead)
+    internal (int horizontal, int vertical) CollisionChecker()
     {
-        
-        
+        var newHead = (
+            horizontal: Snake.SnakeHead.horizontal + Direction.Horizontal,
+            vertical: Snake.SnakeHead.vertical + Direction.Vertical
+        );
+    
+        if (newHead.horizontal <= 0 || newHead.horizontal >= width - 1 || 
+            newHead.vertical <= 0 || newHead.vertical >= height - 1)
+        {
+            alive = false;
+        }
+    
+        if (Snake.SnakeBody.Contains(newHead))
+        {
+            alive = false;
+        }
+
+        return newHead;
     }
 }
