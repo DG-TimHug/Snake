@@ -148,11 +148,11 @@ internal static class Program
         while (true)
         {
             Console.WriteLine("How long should your snake be at the start of the game?");
-            if (int.TryParse(Console.ReadLine(), out var initialSnakeLength) && initialSnakeLength is > 0 and < 7)
+            if (int.TryParse(Console.ReadLine(), out var initialSnakeLength) && initialSnakeLength is > -1 and < 7)
             {
                 return initialSnakeLength;
             }
-            Console.WriteLine("Please enter a number between 1 and 6");
+            Console.WriteLine("Please enter a number between 0 and 6");
         }
     }
 }
